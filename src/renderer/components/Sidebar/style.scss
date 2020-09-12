@@ -1,0 +1,62 @@
+%tab-shared {
+  text-decoration: none;
+  padding: 0 10px;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  color: #fff;
+  border-color: transparent;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 15px;
+  border-radius: 10%;
+}
+
+.container {
+  background: darken(#505061, 10%);
+  padding: 40px 0 0;
+  user-select: none;
+  will-change: width;
+  transition: width 200ms;
+  width: 80px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .tab {
+    @extend %tab-shared;
+
+    display: inline-block;
+    font-size: 25px;
+    padding: 12px;
+
+    &.active span.etabs-tab-title {
+      color: #fff;
+      box-shadow: 0 0 0 2px #fff;
+    }
+
+    .etabs-tab-button-close {
+      display: none;
+    }
+  }
+}
+
+.containerHidden {
+  width: 0;
+}
+
+.SettingsTab {
+  font-size: 12px;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  margin: auto 20px 20px;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+}

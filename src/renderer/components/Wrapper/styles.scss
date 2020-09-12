@@ -1,0 +1,5 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, max-content) repeat(auto-fit, minmax(0, 1fr)) 0;
+}

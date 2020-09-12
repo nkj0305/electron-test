@@ -1,0 +1,160 @@
+version: 2.1
+
+executors:
+  docker-env:
+    docker:
+      - image: circleci/node:12.18.3-browsers
+        user: node
+  macos-env:
+    macos:
+      xcode: "10.2.0"
+
+step-save-cache: &step-save-cache
+  save_cache:
+    paths:
+      - ~/.nvm
+      - ~/.cache/yarn
+      - ~/.cache/electron
+      - ~/.cache/electron-builder
+    key: yarn-packages-v5-{{ arch }}-{{ .Branch }}-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
+
+step-restore-cache: &step-restore-cache
+  restore_cache:
+    keys:
+      - yarn-packages-v5-{{ arch }}--{{ .Branch }}-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
+      - yarn-packages-v5-{{ arch }}
+
+step-nvm-install: &step-nvm-install
+  run:
+    command: |
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash || true
+      echo ". ~/.nvm/nvm.sh" >> $BASH_ENV
+      . ~/.nvm/nvm.sh --install
+      nvm install
+
+step-yarn-install: &step-yarn-install
+  run: nvm use && yarn install --frozen-lockfile
+
+step-build: &step-build
+  run: nvm use && yarn build:prod
+
+step-e2e: &step-e2e
+  run: nvm use && yarn e2e
+
+filter-tag: &filter-tag
+  tags:
+    only: /^v.*/
+
+filter-tag-only: &filter-tag-only
+  <<: *filter-tag
+  branches:
+    ignore: /.*/
+
+jobs:
+  lint:
+    executor: docker-env
+    steps:
+      - checkout
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export ELECTRON_CACHE="$HOME/.cache/electron"' >> $BASH_ENV
+            echo 'export ELECTRON_BUILDER_CACHE="$HOME/.cache/electron-builder"' >> $BASH_ENV
+      - *step-restore-cache
+      - *step-nvm-install
+      - *step-yarn-install
+      - *step-save-cache
+      - run: yarn lint
+  test-linux:
+    executor: docker-env
+    steps:
+      - checkout
+      - *step-restore-cache
+      - *step-nvm-install
+      - *step-yarn-install
+      - run: yarn coverage:ci
+      - *step-build
+      - *step-e2e
+  test-macos:
+    executor: macos-env
+    steps:
+      - checkout
+      - *step-restore-cache
+      - *step-nvm-install
+      - *step-yarn-install
+      - *step-save-cache
+      - run: yarn test
+      - *step-build
+      - *step-e2e
+  deploy-macos:
+    executor: macos-env
+    steps:
+      - checkout
+      - *step-restore-cache
+      - *step-nvm-install
+      - *step-yarn-install
+      - *step-build
+      - run: yarn build-release
+  deploy-linux:
+    docker:
+      - image: electronuserland/builder:wine
+    steps:
+      - checkout
+      - *step-restore-cache
+      - *step-nvm-install
+      - *step-yarn-install
+      - *step-save-cache
+      - *step-build
+      - run:
+          name: deploy
+          command: |
+            yarn build-release --linux --win -c.snap.publish=github # https://github.com/electron-userland/electron-builder/issues/4142
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "dist/*.snap"
+  deploy-linux-snapcraft:
+    docker:
+      - image: cibuilds/snapcraft:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: publish
+          command: |
+            mkdir .snapcraft
+            echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+            snapcraft push dist/*.snap --release stable
+
+workflows:
+  version: 2
+  lint-test-deploy:
+    jobs:
+      - lint:
+          filters:
+            <<: *filter-tag
+      - test-linux:
+          filters:
+            <<: *filter-tag
+          requires:
+            - lint
+      - test-macos:
+          filters:
+            <<: *filter-tag
+          requires:
+            - lint
+      - deploy-linux:
+          requires:
+            - test-linux
+          filters:
+            <<: *filter-tag-only
+      - deploy-linux-snapcraft:
+          requires:
+            - deploy-linux
+          filters:
+            <<: *filter-tag-only
+      - deploy-macos:
+          requires:
+            - test-macos
+          filters:
+            <<: *filter-tag-only

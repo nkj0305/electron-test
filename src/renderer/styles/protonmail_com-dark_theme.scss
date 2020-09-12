@@ -1,0 +1,279 @@
+/*!
+Dark theme by MatCore, original template from
+ProtonMail Custom Theme - Black Rock modified by Jack.A
+*/
+
+html.protonmail .text-purple {
+  color: #b53232;
+}
+
+html.darkTheme body {
+  p a {
+    color: #b53232;
+  }
+
+  .pm_panel.alt {
+    background: rgb(57, 57, 69);
+  }
+
+  .pm_buttons {
+    a {
+      color: #1c1c1c;
+    }
+  }
+
+  .pm_table {
+    td {
+      color: #1c1c1c;
+    }
+
+    th {
+      a,
+      .fa {
+        color: #1c1c1c;
+      }
+    }
+  }
+
+  .pm_button {
+    color: #1c1c1c;
+
+    &.primary {
+      background-color: #b53232;
+      border-color: #b53232;
+
+      &:active,
+      &:focus,
+      &:hover {
+        border-color: #b53232;
+        background-color: #b53232;
+      }
+
+      &.disabled,
+      &[disabled] {
+        background-color: #b53232;
+      }
+    }
+
+    &.round {
+      border-radius: 2px;
+      border: 1px solid #7b7b7b;
+
+      .fa {
+        color: #b53232;
+      }
+    }
+
+    &.link {
+      color: #fff;
+    }
+  }
+
+  .pm_form .input-icon .fa {
+    color: #b53231;
+  }
+
+  .pm_toggle {
+    &.off {
+      .off {
+        background: #b53232;
+      }
+    }
+  }
+
+  section.sidebar {
+    background: #21242e;
+
+    ul.menu {
+      li {
+        a {
+          color: #fff;
+
+          &:hover {
+            color: #b53232;
+          }
+        }
+
+        &.active {
+          a {
+            i.fa {
+              color: #b53232;
+            }
+          }
+        }
+      }
+    }
+
+    div.footer {
+      div.link a {
+        color: #b53232;
+      }
+
+      .bar em {
+        background-color: #b53232;
+      }
+
+      div.storage strong {
+        color: #b53232;
+      }
+
+      div.labels {
+        ul li {
+          a {
+            color: #fff;
+
+            &:hover {
+              color: #b53232;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #pm_composer .composer {
+    header {
+      background: #2c2b2b;
+
+      .pm_button {
+        color: #b53232;
+      }
+    }
+
+    footer {
+      .pm_button.primary {
+        background: #b53232;
+      }
+    }
+  }
+
+  #pm_settings {
+    .pm_tabs {
+      background: #474747;
+
+      li {
+        a.pm_button {
+          border-color: #1c1c1c;
+          background: #1c1c1c;
+          color: #fff;
+
+          :hover {
+            background: #373737;
+          }
+        }
+
+        &.active {
+          a.pm_button {
+            background: #fff !important;
+            color: #1c1c1c;
+          }
+        }
+      }
+    }
+
+    #plans {
+      header .link {
+        color: #8cc63f;
+      }
+
+      .plans .plan {
+        header {
+          background: #1c1c1c;
+          border: 1px solid #1c1c1c;
+        }
+
+        h3,
+        .price {
+          color: #1c1c1c;
+        }
+      }
+    }
+  }
+
+  header#pm_header-desktop {
+    background: #21242e;
+
+    a.logo {
+      background: #21242e;
+    }
+
+    ul.navigation li {
+      a {
+        .fa,
+        strong {
+          color: #fff;
+        }
+      }
+
+      &:hover,
+      &.active {
+        a {
+          border-top-color: #b53232 !important;
+
+          .fa,
+          strong {
+            color: #b53232;
+          }
+        }
+      }
+    }
+
+    .pm_buttons .pm_button.primary {
+      background-color: #b53232 !important;
+      border-color: #b53232 !important;
+    }
+  }
+
+  form.searchForm {
+    fieldset {
+      border-radius: 2px;
+      background-color: #21242e;
+
+      button[type=“button”] {
+        color: #b53232;
+        background-color: #21242e;
+        border-radius: 2px 0 0 2px;
+
+        &:hover {
+          background-color: #2e313a;
+        }
+      }
+
+      #closeAdvSearch,
+      button[type=“submit”] {
+        color: #b53232;
+      }
+
+      input.query {
+        background-color: #2e313a;
+      }
+    }
+
+    &.adv {
+      fieldset {
+        #closeAdvSearch,
+        button[type=“submit”] {
+          background-color: #21242e;
+          border-radius: 2px 0 0 2px;
+        }
+      }
+    }
+  }
+
+  #conversation-list-rows .conversation.read {
+    color: #1c1c1c !important;
+  }
+
+  #conversation-view .message .toggleDetails {
+    color: #b53232;
+  }
+
+  .cg-notify-message.notification-success {
+    background-color: #b53232;
+    border-color: #b53232;
+  }
+
+  .conversation .selected-bar {
+    background: #b53232;
+  }
+}

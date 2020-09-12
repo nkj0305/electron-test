@@ -1,0 +1,17 @@
+node_modules
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+.idea
+.env
+*.tgz
+package-lock.json
+
+# ignore everything in 'app' folder what had been generated from 'src' folder
+/app
+/dist
+
+/coverage
+coverage.json
+.nyc_output

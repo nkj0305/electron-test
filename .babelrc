@@ -1,0 +1,22 @@
+{
+    "env": {
+      "test_main": {
+        "plugins": [
+          ["istanbul", {
+            "coverageVariable": "__coverage__",
+            "exclude": ["**/*.spec.js"]
+          }]
+        ]
+      }
+    },
+    "presets": [
+      ["@babel/env", {
+        "targets": { "node": 8 },
+      }],
+      "@babel/react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  }

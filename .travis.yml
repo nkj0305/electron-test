@@ -7,8 +7,15 @@ cache:
     - node_modules
 script:
   - yarn build:prod
-  - ls build
   - yarn dist
+deploy:
+  provider: s3
+  access_key_id: $AWS_KEY
+  secret_access_key: $AWS_SECRET
+  bucket: wonderful-app-nkj
+  region: us-east-2
+  skip_cleanup: true
+  local_dir: build
 branches:
   only:
     - master

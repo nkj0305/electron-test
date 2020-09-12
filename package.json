@@ -101,6 +101,7 @@
     "coverage:renderer": "yarn test:renderer --coverage",
     "release": "standard-version",
     "dist": "electron-builder",
+    "release": "electron-builder",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:style": "stylelint --config config/stylelint.config.js \"src/renderer/**/*.{css,scss}\"",
     "lint:js": "eslint src",

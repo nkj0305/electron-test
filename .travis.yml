@@ -1,10 +1,7 @@
-matrix:
-  include:
-    - os: linux
-      services: docker
-      language: node_js
-      node_js:
-      - node
+dist: bionic
+language: node_js
+node_js:
+  - node
 
 cache:
   directories:
@@ -13,8 +10,8 @@ cache:
     - $HOME/.cache/electron-builder
     
 install:
-  - apt-get update
-  - apt-get install wine
+  - sudo apt-get update
+  - sudo apt-get install wine
 
 script:
   - yarn install

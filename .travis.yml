@@ -1,4 +1,10 @@
 dist: bionic
+addons:
+  apt:
+    sources:
+      - ppa:ubuntu-wine/ppa
+    packages:
+    - wine
 language: node_js
 node_js:
   - node
@@ -8,10 +14,6 @@ cache:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
-    
-install:
-  - sudo apt-get update
-  - sudo apt-get -y install wine
 
 script:
   - yarn install

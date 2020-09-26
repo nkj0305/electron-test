@@ -11,12 +11,8 @@ cache:
     - $HOME/.cache/electron-builder
 
 script:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      yarn build:prod
-      yarn dist
-    else
-      ls
-    fi
+  - yarn install
+  - yarn build:prod
+  - yarn dist
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine

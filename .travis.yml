@@ -3,6 +3,7 @@ node_js:
   - node
 cache:
   yarn: true
+  wine: true
   directories:
     - node_modules
 install:
@@ -10,7 +11,7 @@ install:
   - sudo apt-get -y install wine
 script:
   - yarn build:prod
-  - yarn dist
+  - yarn dist:win
   - ls dist
 deploy:
   provider: s3

@@ -17,5 +17,12 @@ script:
   - yarn install
   - yarn build:prod
   - yarn dist:win
-before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
+  
+deploy:
+  provider: s3
+  access_key_id: $AWS_KEY
+  secret_access_key: $AWS_SECRET
+  bucket: wonderful-app-nkj
+  region: us-east-2
+  skip_cleanup: true
+  local_dir: dist

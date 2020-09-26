@@ -1,26 +1,22 @@
-language: node_js
-node_js:
-  - node
+matrix:
+  include:
+    - os: linux
+      services: docker
+      language: generic
+
 cache:
-  yarn: true
-  wine: true
   directories:
     - node_modules
-install:
-  - sudo apt-get update
-  - sudo apt-get -y install wine
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
 script:
-  - yarn build:prod
-  - yarn dist:win
-  - ls dist
-deploy:
-  provider: s3
-  access_key_id: $AWS_KEY
-  secret_access_key: $AWS_SECRET
-  bucket: wonderful-app-nkj
-  region: us-east-2
-  skip_cleanup: true
-  local_dir: dist
-branches:
-  only:
-    - master
+  - |
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      yarn build:prod
+      yarn dist
+    else
+      ls
+    fi
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine

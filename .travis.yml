@@ -2,7 +2,9 @@ matrix:
   include:
     - os: linux
       services: docker
-      language: generic
+      language: node_js
+      node_js:
+      - node
 
 cache:
   directories:
